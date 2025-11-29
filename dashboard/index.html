@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tendrill</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>tendrill</h1>
+            <nav class="tabs">
+                <button class="tab active" data-tab="dashboard">Dashboard</button>
+                <button class="tab" data-tab="wiki">Wiki</button>
+            </nav>
+            <div class="status">
+                <span class="dot" id="connection-status"></span>
+                <span id="connection-text">Verbinde...</span>
+            </div>
+        </header>
+
+        <!-- Dashboard Tab -->
+        <div id="tab-dashboard" class="tab-content active">
+
+        <!-- Current Phase -->
+        <section class="phase-section">
+            <div class="phase-info">
+                <span class="label">Aktuelle Phase</span>
+                <span class="phase-name" id="current-phase">-</span>
+                <span class="phase-day" id="phase-day">Tag -</span>
+            </div>
+            <div class="phase-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="phase-progress"></div>
+                </div>
+                <span class="progress-text" id="phase-remaining">- Tage verbleibend</span>
+            </div>
+        </section>
+
+        <!-- Environment Grid -->
+        <section class="env-grid">
+            <div class="env-card">
+                <span class="env-label">Temperatur</span>
+                <span class="env-value" id="temp-value">--</span>
+                <span class="env-unit">°C</span>
+                <div class="env-range">
+                    <span class="env-target" id="temp-target">Ziel: --</span>
+                </div>
+            </div>
+
+            <div class="env-card">
+                <span class="env-label">Luftfeuchtigkeit</span>
+                <span class="env-value" id="humidity-value">--</span>
+                <span class="env-unit">%</span>
+                <div class="env-range">
+                    <span class="env-target" id="humidity-target">Ziel: --</span>
+                </div>
+            </div>
+
+            <div class="env-card">
+                <span class="env-label">VPD</span>
+                <span class="env-value" id="vpd-value">--</span>
+                <span class="env-unit">kPa</span>
+                <div class="env-range">
+                    <span class="env-target" id="vpd-target">Ziel: --</span>
+                </div>
+            </div>
+
+            <div class="env-card">
+                <span class="env-label">CO₂</span>
+                <span class="env-value" id="co2-value">--</span>
+                <span class="env-unit">ppm</span>
+                <div class="env-range">
+                    <span class="env-target" id="co2-target">Ziel: --</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrients -->
+        <section class="nutrients-section">
+            <h2>Nährstoffe</h2>
+            <div class="nutrients-grid">
+                <div class="nutrient-item">
+                    <span class="nutrient-label">pH</span>
+                    <span class="nutrient-value" id="ph-value">--</span>
+                    <span class="nutrient-target" id="ph-target">Ziel: --</span>
+                </div>
+                <div class="nutrient-item">
+                    <span class="nutrient-label">EC</span>
+                    <span class="nutrient-value" id="ec-value">--</span>
+                    <span class="nutrient-unit">mS/cm</span>
+                    <span class="nutrient-target" id="ec-target">Ziel: --</span>
+                </div>
+                <div class="nutrient-item">
+                    <span class="nutrient-label">Wasser</span>
+                    <span class="nutrient-value" id="water-temp-value">--</span>
+                    <span class="nutrient-unit">°C</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerts -->
+        <section class="alerts-section">
+            <h2>Alerts</h2>
+            <div class="alerts-list" id="alerts-list">
+                <div class="alert-empty">Keine aktiven Alerts</div>
+            </div>
+        </section>
+
+        <!-- Light Schedule -->
+        <section class="light-section">
+            <div class="light-info">
+                <span class="light-label">Licht</span>
+                <span class="light-schedule" id="light-schedule">--/--</span>
+                <span class="light-status" id="light-status">-</span>
+                <span class="light-time" id="light-time">--:--</span>
+            </div>
+            <div class="light-timeline">
+                <div class="light-hours">
+                    <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
+                </div>
+                <div class="light-bar-24h">
+                    <div class="light-on-period" id="light-on-period"></div>
+                    <div class="light-marker" id="light-marker"></div>
+                </div>
+                <div class="light-labels">
+                    <span id="light-on-time">06:00 - 00:00</span>
+                    <span id="light-remaining"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase Timeline -->
+        <section class="timeline-section">
+            <h2>Phasen</h2>
+            <div class="timeline" id="phase-timeline">
+                <!-- Filled by JS -->
+            </div>
+        </section>
+
+        </div><!-- End Dashboard Tab -->
+
+        <!-- Wiki Tab -->
+        <div id="tab-wiki" class="tab-content">
+            <div class="wiki-container">
+                <aside class="wiki-nav">
+                    <h3>Phasen</h3>
+                    <ul>
+                        <li><a href="#" class="wiki-link active" data-section="overview">Übersicht</a></li>
+                        <li><a href="#" class="wiki-link" data-section="germination">Keimung</a></li>
+                        <li><a href="#" class="wiki-link" data-section="seedling">Sämling</a></li>
+                        <li><a href="#" class="wiki-link" data-section="vegetative">Vegetative Phase</a></li>
+                        <li><a href="#" class="wiki-link" data-section="flowering">Blütephase</a></li>
+                        <li><a href="#" class="wiki-link" data-section="harvest">Ernte & Trocknung</a></li>
+                    </ul>
+                    <h3>Parameter</h3>
+                    <ul>
+                        <li><a href="#" class="wiki-link" data-section="vpd">VPD erklärt</a></li>
+                        <li><a href="#" class="wiki-link" data-section="ec-ph">EC & pH</a></li>
+                        <li><a href="#" class="wiki-link" data-section="light">Licht & PPFD</a></li>
+                    </ul>
+                    <h3>System</h3>
+                    <ul>
+                        <li><a href="#" class="wiki-link" data-section="intelligence">KI & Automatisierung</a></li>
+                        <li><a href="#" class="wiki-link" data-section="sensors">Sensoren & Hardware</a></li>
+                        <li><a href="#" class="wiki-link" data-section="alerts">Alert-System</a></li>
+                        <li><a href="#" class="wiki-link" data-section="architecture">Architektur</a></li>
+                    </ul>
+                </aside>
+                <main class="wiki-content" id="wiki-content">
+                    <!-- Content wird per JS geladen -->
+                </main>
+            </div>
+        </div><!-- End Wiki Tab -->
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

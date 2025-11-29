@@ -1,0 +1,214 @@
+# Tendrill Knowledge Base - Nährstoffe
+# Cannabis Nutrient Requirements
+# Quellen: Frontiers in Plant Science, peer-reviewed cannabis cultivation studies
+
+macronutrients:
+  nitrogen:
+    symbol: "N"
+    function: "Chlorophyll, Proteine, Blattmasse"
+    deficiency_symptoms:
+      - "Gelbfärbung älterer Blätter (von unten nach oben)"
+      - "Verlangsamtes Wachstum"
+      - "Blasse, hellgrüne Blätter"
+    toxicity_symptoms:
+      - "Dunkelgrüne, glänzende Blätter"
+      - "Klauenartige Blattspitzen"
+      - "Verzögerte Blüte"
+    optimal_mg_l:
+      vegetative: [140, 180]
+      flowering: [80, 140]
+    notes: "In Blüte stark reduzieren"
+
+  phosphorus:
+    symbol: "P"
+    function: "Wurzeln, Blütenbildung, Energietransfer"
+    deficiency_symptoms:
+      - "Purpurfärbung der Stängel/Blattstiele"
+      - "Dunkle, blaugrüne Blätter"
+      - "Schwache Blütenentwicklung"
+    toxicity_symptoms:
+      - "Blockiert Zink und Eisen Aufnahme"
+      - "Braune Flecken"
+    optimal_mg_l:
+      vegetative: [30, 60]
+      flowering: [60, 120]
+    notes: "Mythos: Hohe P-Werte in Blüte oft unnötig (Studie: 30mg/L reicht oft)"
+
+  potassium:
+    symbol: "K"
+    function: "Wasserregulation, Blütenbildung, Immunsystem"
+    deficiency_symptoms:
+      - "Braune, verbrannte Blattränder"
+      - "Gelbfärbung zwischen Blattadern"
+      - "Schwache Stängel"
+    toxicity_symptoms:
+      - "Salzaufbau"
+      - "Blockiert Calcium/Magnesium"
+    optimal_mg_l:
+      vegetative: [100, 180]
+      flowering: [150, 250]
+
+
+secondary_nutrients:
+  calcium:
+    symbol: "Ca"
+    function: "Zellwände, Wurzelspitzen"
+    deficiency_symptoms:
+      - "Braune Flecken auf neuen Blättern"
+      - "Verkrüppelte neue Blätter"
+      - "Schwache Stängel"
+    optimal_mg_l: [150, 250]
+    notes: "Oft in Leitungswasser vorhanden"
+
+  magnesium:
+    symbol: "Mg"
+    function: "Photosynthese, Chlorophyll-Kern"
+    deficiency_symptoms:
+      - "Intervenale Chlorose (Gelbfärbung zwischen Adern)"
+      - "Beginnt bei älteren Blättern"
+      - "Blattränder nach oben gebogen"
+    optimal_mg_l: [50, 100]
+    notes: "Häufiger Mangel, Cal-Mag Ergänzung oft nötig"
+
+  sulfur:
+    symbol: "S"
+    function: "Proteine, Enzyme, Terpene"
+    deficiency_symptoms:
+      - "Gelbfärbung neuer Blätter"
+      - "Ähnlich wie N-Mangel aber bei jungen Blättern"
+    optimal_mg_l: [50, 100]
+
+
+micronutrients:
+  iron:
+    symbol: "Fe"
+    function: "Chlorophyll-Synthese"
+    deficiency_symptoms:
+      - "Intervenale Chlorose neuer Blätter"
+      - "Blätter werden fast weiß"
+    notes: "pH-sensitiv, Aufnahme sinkt bei pH > 6.5"
+
+  zinc:
+    symbol: "Zn"
+    function: "Enzymaktivität, Wachstumsregulation"
+    deficiency_symptoms:
+      - "Kleine, verdrehte neue Blätter"
+      - "Kurze Internodien"
+
+  manganese:
+    symbol: "Mn"
+    function: "Photosynthese, Enzymaktivierung"
+    deficiency_symptoms:
+      - "Braune Flecken mit gelber Umrandung"
+      - "Ähnlich wie Ca-Mangel"
+
+  copper:
+    symbol: "Cu"
+    function: "Enzymaktivität"
+    deficiency_symptoms:
+      - "Welke Blattspitzen"
+      - "Dunkle, bläuliche Blätter"
+
+  boron:
+    symbol: "B"
+    function: "Zellwände, Blütenentwicklung"
+    deficiency_symptoms:
+      - "Hohle Stängel"
+      - "Verkrüppelte Wachstumsspitzen"
+
+  molybdenum:
+    symbol: "Mo"
+    function: "Stickstoff-Verarbeitung"
+    deficiency_symptoms:
+      - "Ähnlich wie N-Mangel"
+      - "Blattränder nach oben gebogen"
+
+
+# EC/PPM Richtwerte nach Phase
+ec_ppm_targets:
+  seedling:
+    ec_ms: [0.4, 0.8]
+    ppm_500: [200, 400]
+    ppm_700: [280, 560]
+  
+  vegetative_early:
+    ec_ms: [0.8, 1.2]
+    ppm_500: [400, 600]
+    ppm_700: [560, 840]
+  
+  vegetative_late:
+    ec_ms: [1.2, 1.6]
+    ppm_500: [600, 800]
+    ppm_700: [840, 1120]
+  
+  flowering_early:
+    ec_ms: [1.6, 2.0]
+    ppm_500: [800, 1000]
+    ppm_700: [1120, 1400]
+  
+  flowering_mid:
+    ec_ms: [1.8, 2.4]
+    ppm_500: [900, 1200]
+    ppm_700: [1260, 1680]
+  
+  flowering_late:
+    ec_ms: [1.4, 1.8]
+    ppm_500: [700, 900]
+    ppm_700: [980, 1260]
+
+
+# pH Bereiche nach Medium
+ph_ranges:
+  soil:
+    optimal: [6.0, 7.0]
+    acceptable: [5.8, 7.2]
+  
+  coco:
+    optimal: [5.8, 6.2]
+    acceptable: [5.5, 6.5]
+  
+  hydro:
+    optimal: [5.5, 6.0]
+    acceptable: [5.3, 6.3]
+  
+  dwc:
+    optimal: [5.5, 5.8]
+    acceptable: [5.3, 6.2]
+
+
+# NPK Verhältnisse nach Phase
+npk_ratios:
+  seedling: "2:1:2"
+  vegetative: "3:1:2"
+  transition: "2:1:2"
+  flowering_early: "1:3:2"
+  flowering_mid: "1:3:3"
+  flowering_late: "0:3:3"
+  flush: "0:0:0"
+
+
+# Lockout pH-Bereiche (Nährstoff wird nicht aufgenommen)
+nutrient_lockout:
+  nitrogen:
+    lockout_below_ph: 5.0
+    lockout_above_ph: 7.5
+  phosphorus:
+    lockout_below_ph: 5.0
+    lockout_above_ph: 7.5
+  potassium:
+    lockout_below_ph: 5.0
+    lockout_above_ph: 7.5
+  calcium:
+    lockout_below_ph: 5.0
+    lockout_above_ph: 7.5
+  magnesium:
+    lockout_below_ph: 5.0
+    lockout_above_ph: 7.5
+  iron:
+    lockout_above_ph: 6.5
+  manganese:
+    lockout_above_ph: 6.5
+  zinc:
+    lockout_above_ph: 7.0
+  copper:
+    lockout_above_ph: 7.0

@@ -1,0 +1,118 @@
+services:
+  # =============================================================================
+  # PostgreSQL + TimescaleDB - Zeitreihendatenbank
+  # =============================================================================
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: tendrill-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-tendrill}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tendrill_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-tendrill}
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tendrill} -d ${POSTGRES_DB:-tendrill}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tendrill-net
+
+  # =============================================================================
+  # Mosquitto MQTT Broker
+  # =============================================================================
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: tendrill-mqtt
+    restart: unless-stopped
+    volumes:
+      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./docker/mosquitto/password.txt:/mosquitto/config/password.txt:ro
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+      - "${MQTT_WS_PORT:-9001}:9001"
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - tendrill-net
+
+  # =============================================================================
+  # Tendrill Backend (FastAPI)
+  # =============================================================================
+  tendrill:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tendrill-api
+    restart: unless-stopped
+    environment:
+      # Database
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-tendrill}:${POSTGRES_PASSWORD:-tendrill_secret}@timescaledb:5432/${POSTGRES_DB:-tendrill}
+
+      # MQTT
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      MQTT_USER: ${MQTT_USER:-tendrill}
+      MQTT_PASSWORD: ${MQTT_PASSWORD:-tendrill_mqtt}
+
+      # App
+      TENDRILL_ENV: ${TENDRILL_ENV:-development}
+      TENDRILL_DEBUG: ${TENDRILL_DEBUG:-true}
+      TENDRILL_LOG_LEVEL: ${TENDRILL_LOG_LEVEL:-INFO}
+    volumes:
+      - ./src:/app/src:ro
+      - ./data:/app/data:ro
+    ports:
+      - "${API_PORT:-8000}:8000"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+      mosquitto:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - tendrill-net
+
+  # =============================================================================
+  # Redis - Caching & Pub/Sub (für WebSocket Broadcasting)
+  # =============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: tendrill-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - tendrill-net
+
+networks:
+  tendrill-net:
+    driver: bridge
+
+volumes:
+  timescaledb_data:
+  mosquitto_data:
+  mosquitto_log:
+  redis_data:
